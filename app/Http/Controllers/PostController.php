@@ -22,14 +22,16 @@ class PostController extends Controller
         $filters = [
             'keyword' => $request->input('keyword'),
             'category_id' => $request->input('category_id'),
+            'user_id' => $request->input('user_id'),
         ];
 
         $filteredPosts = $this->postService->getFilteredPosts($filters);
 
         $posts = $filteredPosts['posts'];
         $categories = $filteredPosts['categories'];
+        $users = $filteredPosts['users'];
 
-        return view('posts.index', compact('posts', 'categories'));
+        return view('posts.index', compact('posts', 'categories', 'users'));
     }
 
     public function create()
@@ -72,7 +74,6 @@ class PostController extends Controller
     public function update(PostRequest $postRequest, Post $post)
     {
         $validateData = $postRequest->validated();
-        // $categoryId = $request->input('category_id');
         $result = $this->postService->updatePost($post, $validateData);
 
         if ($result['success']) {

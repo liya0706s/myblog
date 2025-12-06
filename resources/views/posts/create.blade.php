@@ -11,7 +11,3 @@
         'readonly' => false,
     ])
 @endsection
-
-@section('scripts')
-    @vite('resources/js/index.js')
-@endsection

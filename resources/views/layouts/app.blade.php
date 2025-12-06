@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="category-store-url" content="{{ route('categories.store') }}">
     <title>@yield('title', 'Laravel')</title>
     {{-- Bootstrap CSS CDN --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,7 +13,7 @@
     {{-- Navbar --}}
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
         <div class="container">
-            <a href="{{ url('/') }}" class="navbar-brand">My Blog</a>
+            <a href="{{ url('/posts') }}" class="navbar-brand">My Blog</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     @guest
@@ -31,11 +33,17 @@
         </div>
     </nav>
 
+    @yield('search')
+
     {{-- Page Content --}}
     <div class="container">
         @yield('content')
     </div>
-    @yield('scripts')
+
+     <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    @vite('resources/js/index.js')
 
     {{-- Bootstrap JS Bundle --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

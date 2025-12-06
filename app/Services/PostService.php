@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
 class PostService
@@ -14,10 +15,10 @@ class PostService
             $post = Post::create([
                 'title' => $data['title'],
                 'content' => $data['content'],
-                'user_id' => auth()->id() ?? '1',   // 假設沒有登入是給1, angie
+                'user_id' => 1,
                 'category_id' => $data['category_id'],
             ]);
-
+            // dd($post);
             return [
                 'success' => true,
                 'message' => '文章建立成功',
@@ -25,7 +26,7 @@ class PostService
             ];
         } catch (\Exception $e) {
             Log::error('建立文章失敗:' . $e->getMessage());
-            // dd($e->getMessage());
+            // dd($e->getMessage(), $data);
 
             return [
                 'success' => false,
@@ -95,16 +96,22 @@ class PostService
             $query->where('category_id', $filters['category_id']);
         }
 
+        if (!empty($filters['user_id'])) {
+            $query->where('user_id', $filters['user_id']);
+        }
+
         $posts = $query->with(['category', 'user'])
                     ->latest()
                     ->paginate(10)
                     ->withQueryString();
 
         $categories = Category::all();
+        $users = User::all();
 
         return [
             'posts' => $posts,
             'categories' => $categories,
+            'users' => $users,
         ];
     }
 }

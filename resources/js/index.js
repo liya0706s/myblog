@@ -12,7 +12,8 @@ $(document).ready(function() {
         $categoryModal.modal('show');
     });
 
-    $saveBtn.on('click', function() {
+    $saveBtn.on('click', function(e) {
+        e.preventDefault();
         var newCategory = $categoryInput.val().trim();
 
         if (!newCategory) {

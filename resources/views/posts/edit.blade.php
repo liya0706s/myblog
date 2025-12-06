@@ -6,12 +6,8 @@
     <h1 class="mt-3">單筆編輯</h1>
     @include('posts.partials.form', [
         'action' => route('posts.update', $post),
-        'method' => 'PUT',
+        'method' => 'patch',
         'post' => $post,
         'readonly' => false,
     ])
-@endsection
-
-@section('scripts')
-    @vite('resources/js/index.js')
 @endsection

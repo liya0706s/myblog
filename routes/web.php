@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,5 @@ Route::prefix('posts')->name('posts.')
         Route::patch('/{post}', 'update')->name('update');
         Route::delete('/{post}', 'destroy')->name('destroy');
 });
+
+Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');

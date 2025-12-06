@@ -11,6 +11,9 @@
             value="{{ old('title', $post->title ?? '') }}"
             class="form-control"
             @if($readonly) readonly @endif>
+        @error('title')
+            <div class="text-danger small">{{ $message }}</div>
+        @enderror
     </div>
 
     <div class="mb-3">
@@ -18,9 +21,10 @@
         <div class="row gap-1">
             <div class="col-md-6">
                 <select name="category_id" id="category_id" class="form-select">
-                    <option value="">選擇分類</option>
+                    <option value="" @if($readonly) disabled @endif>選擇分類</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ old('category_id', $post->category_id ?? '') == $category->id ? 'selected' : '' }}>
+                        <option value="{{ $category->id }}" {{ old('category_id', $post->category_id ?? '') == $category->id ? 'selected' : '' }}
+                            @if($readonly) disabled @endif>
                             {{ $category->name }}
                         </option>
                     @endforeach
@@ -28,7 +32,8 @@
             </div>
             <div class="col-md-4">
                 <button type="button" class="btn btn-secondary" id="add-category-btn"
-                        data-bs-toggle="modal" data-bs-target="#categoryModal">
+                        data-bs-toggle="modal" data-bs-target="#categoryModal"
+                        @if($readonly) disabled @endif>
                     新增分類
                 </button>
             </div>
@@ -39,6 +44,9 @@
         <label>內容</label>
         <textarea name="content" rows="10" class="form-control"
         @if ($readonly) readonly @endif>{{ old('content', $post->content ?? '') }}</textarea>
+        @error('content')
+            <div class="text-danger small">{{ $message }}</div>
+        @enderror
     </div>
 
     @unless ($readonly)
